@@ -1,0 +1,22 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5001:5001"
+    environment:
+      - DATABASE_URL=postgres://kieran:7ce8e98588@db:5432/budgeting
+      - JWT_SECRET=not_your_keys
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=kieran
+      - POSTGRES_PASSWORD=7ce8e98588
+      - POSTGRES_DB=budgeting
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

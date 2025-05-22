@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: budgeting-app-api
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: FRONTEND_URL
+        value: https://budgeting-app-frontend.netlify.app
+      - key: DATABASE_URL
+        fromDatabase:
+          name: budgeting-app-db
+          property: connectionString
+
+databases:
+  - name: budgeting-app-db
+    plan: free
+    databaseName: budgeting_app_prod
+    user: budgeting_app_user
